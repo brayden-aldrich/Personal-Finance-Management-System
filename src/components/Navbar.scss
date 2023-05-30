@@ -1,0 +1,64 @@
+@import "../variables.scss";
+
+#navbar {
+    position: fixed;
+    box-shadow: 0px 1px 5px black;
+    background: hsl(0, 0%, 10%);
+    width: 100vw;
+    height: $navbarHeight;
+
+    @media (max-width: 650px) {
+        // remove the title if the screen is too small
+        #title {
+            display: none;
+        }
+    }
+
+    .flex-container {
+        display: flex;
+        column-gap: 2rem;
+        margin: 20px;
+        align-items: center;
+    }
+
+    #title {
+        color: $appColor;
+    }
+
+    ul {
+        display: inline-flex;
+        align-items: flex-start;
+        column-gap: 8pt;
+
+        &.left {
+            flex: 1 0;
+        }
+
+        &.right {
+            flex: 0 0;
+        }
+    }
+}
+
+/* Navigation Buttons */
+.navButton {
+    display: block;
+    border: 3px solid $appColor;
+    border-radius: 4px;
+    padding: 4px 10px;
+    background: hsl(0, 0%, 15%);
+
+    a {
+        color: #ddd;
+        text-decoration: none;
+
+        &:hover {
+            color: #bbb;
+        }
+
+        &:active,
+        &.active {
+            color: $appColor;
+        }
+    }
+}
