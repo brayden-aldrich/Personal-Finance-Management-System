@@ -3,13 +3,14 @@ import ExpenseRow from './ExpenseRow';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Expense } from '../classes/Expense';
 
+const day = 100000000
 
 const expenses = [
-    new Expense("Elmer's", Date.now() - 100000000, 18.33),
-    new Expense("Taco Bell", Date.now() - 200000000, 5.99),
-    new Expense("DMV", Date.now() - 300000000, 100.00),
-    new Expense("Target", Date.now() - 400000000, 56.49),
-    new Expense("Safeway", Date.now() - 500000000, 4.39),
+    new Expense("Elmer's", Date.now() - 1 * day, 18.33),
+    new Expense("Taco Bell", Date.now() - 2 * day, 5.99),
+    new Expense("DMV", Date.now() - 3 * day, 100.00),
+    new Expense("Target", Date.now() - 4 * day, 56.49),
+    new Expense("Safeway", Date.now() - 5 * day, 4.39),
 ]
 
 function ExpenseTable() { // function ExpenseTable({expenses})
