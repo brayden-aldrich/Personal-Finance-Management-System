@@ -38,9 +38,10 @@ class Budget {
 
     // #Provides a lowercase, no-space version of the budget name
     // #   Used to create temp filenames
-    def simplifyName(self) -> str:
+    simplifyName(){
         simpleName = self.budgetName.replace(" ","").lower()
         return simpleName
+    }
 
     // #Exports the expense array to a json file
     def exportExpensesToJson(self):
