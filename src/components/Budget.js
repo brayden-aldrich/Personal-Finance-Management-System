@@ -28,12 +28,13 @@ class Budget {
         this.expenseArray = []
     }
 
-    insertExpenseData(name, date, amount):
+    insertExpenseData(name, date, amount){
         // #First, insert info about the expense into a temp dict
-        var expense = Expense(name, date, amount)
+        var newExpense = Expense(name, date, amount)
 
         // #Then, insert it into the budget object's expense array
-        self.expenseArray.append(expenseDict)
+        self.expenseArray.append(newExpense)
+    }
 
     // #Provides a lowercase, no-space version of the budget name
     // #   Used to create temp filenames
