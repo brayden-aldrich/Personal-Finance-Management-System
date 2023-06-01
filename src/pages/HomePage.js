@@ -5,11 +5,15 @@ import ExpenseTable from "../components/ExpenseTable";
 import Piechart from "../components/Piechart";
 import { TypeExpense } from "../classes/TypeExpense";
 
+// get each unique type from the expenses
 let tSet = new Set(expenses.map((e) => e.type))
 let typeArray = []
+// create a new TypeExpense object out of the set
 for(const type of tSet){
     typeArray.push(new TypeExpense(type))
 }
+
+// add each expense object into the correct TypeExpense expensesArray
 for(var i = 0; i < typeArray.length; i++){
     let x = expenses.filter(e =>  {
         if (e.type === typeArray[i].type){
@@ -21,9 +25,10 @@ for(var i = 0; i < typeArray.length; i++){
     })
 }
 
-console.log(typeArray.map((e) => e.getTypeTotal()))
+
 
 function HomePage() {
+    // set up piechart data
     const [chartData, setChartData] = useState({
         labels: typeArray.map((e) => e.type),
         datasets: [
