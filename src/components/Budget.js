@@ -2,9 +2,15 @@
 
 // Author: Daniel Mendes
 // Date:   5/9/23
-// Desc:   This is just a draft of how we could create and operate 
+// Desc:   This is just a draft of how we could create and operate
 //         budget objects in the final project. This has basic JSON
 //         file I/O and a general structure for a "Budget" Object
+
+// Editor:  Ethan Nixon
+// Date:    6/1/23
+// Desc:    I think this was in python originally (you can check the
+//          version history if you want to see) and I think it's now
+//          properly translated to js.
 
 //import json
 
