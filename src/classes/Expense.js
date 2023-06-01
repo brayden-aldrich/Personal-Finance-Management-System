@@ -15,11 +15,17 @@ export class Expense {
 
     /** @type {number} */
     amount
+    
+    /** @type {string} */
+    expenseType
+    
+ 
 
-    constructor(name, date, amount) {
+    constructor(name, date, amount, expenseType) {
         this.name = name
         this.date = date
         this.amount = amount
+        this.type = expenseType
         this.id = nanoid(6)
     }
 
@@ -33,7 +39,9 @@ export class Expense {
         return `$${this.amount.toFixed(2)}`
     }
     
+    formattedType(){
+        return `${this.expenseType}`
+    }
+
 }
-
-
 
