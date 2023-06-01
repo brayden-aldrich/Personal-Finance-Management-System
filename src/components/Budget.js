@@ -10,7 +10,7 @@
 
 const fs = require("fs");
 
-class Budget {
+export class Budget {
 //  ##########################################
 //  ### BUDGET CLASS DATA MEMBERS
 //  ##########################################
@@ -49,7 +49,7 @@ class Budget {
     exportExpensesToJson(){
         jsonFileName = self.simplifyName() + ".json"
 
-        var data = JSON.stringify(self.expenseArray)
+        var data = JSON.stringify(this.expenseArray)
         fs.writeFile(jsonFileName, data, (error) => {
             if(error){
                 console.error(error)
@@ -60,10 +60,16 @@ class Budget {
 
     // #Imports a new expense array from a json file
     // #   Note: Overwrites the previous expense array
-    def importExpensesFromJson(self, filename: str):
-        with open(filename, "r") as f:
-            self.expenseArray = json.load(f)
+    importExpensesFromJson(filename){
+        fs.readFile(filename, (error, data) => {
+            if(error){
+                console.error(error)
+                throw error
+            }
+            this.expenseArray = JSON.parse(data)
+        })
+    }
 
-        }
+}
 
-export default Budget
+// export default Budget
