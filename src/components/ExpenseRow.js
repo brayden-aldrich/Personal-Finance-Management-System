@@ -10,10 +10,14 @@ function ExpenseRow({
             <TableCell component="th" scope="row">
                 {expense.name}
             </TableCell>
-            <TableCell align="right">{expense.formattedDate()}</TableCell>
-            <TableCell align="right">{expense.formattedAmount()}</TableCell>
             <TableCell align="right">
-        
+                {expense.formattedDate()}
+                </TableCell>
+            <TableCell align="right">
+                {expense.formattedAmount()}
+                </TableCell>
+            <TableCell align="right">
+
             </TableCell>
 
 

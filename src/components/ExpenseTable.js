@@ -1,19 +1,9 @@
 import React from 'react';
 import ExpenseRow from './ExpenseRow';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Expense } from '../classes/Expense';
 
-const day = 100000000
 
-const expenses = [
-    new Expense("Elmer's", Date.now() - 1 * day, 18.33),
-    new Expense("Taco Bell", Date.now() - 2 * day, 5.99),
-    new Expense("DMV", Date.now() - 3 * day, 100.00),
-    new Expense("Target", Date.now() - 4 * day, 56.49),
-    new Expense("Safeway", Date.now() - 5 * day, 4.39),
-]
-
-function ExpenseTable() { // function ExpenseTable({expenses})
+function ExpenseTable({ expenses }) { // function ExpenseTable({expenses})
     return (
 
         <TableContainer component={Paper}>
