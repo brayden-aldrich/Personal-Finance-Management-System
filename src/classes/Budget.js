@@ -82,14 +82,14 @@ export class Budget {
     //  ##########################################
 
     //  #Constructor just builds the object with 
-    constructor(name, desc, amount, timePeriod, icon) {
+    constructor(name, desc, amount, timePeriod, icon, id = nanoid(6)) {
         this.name = name
         this.amount = amount
         // this.expenseArray = []
         this.description = desc
         this.timePeriod = timePeriod
         this.icon = icon
-        this.id = nanoid(6)
+        this.id = id
     }
 
     // insertExpenseData(name, date, amount) {
@@ -136,10 +136,10 @@ export class Budget {
 
 export class BudgetManager {
     static budgets = [
-        new Budget("Grocery", "This is my grocery budget!", 100, "weekly", "grocery"),
-        new Budget("Eating Out", "Money set aside for going to restaurants each month", 250, "monthly", "food"),
-        new Budget("Transportation", "Bus fare and gas", 60, "monthly", "transportation"),
-        new Budget("Entertainment", "Money set aside for things like movies, books, music.", 45, "weekly", "entertainment")
+        new Budget("Grocery", "This is my grocery budget!", 100, "weekly", "grocery", "demo_budget_1"),
+        new Budget("Eating Out", "Money set aside for going to restaurants each month", 250, "monthly", "food", "demo_budget_2"),
+        new Budget("Transportation", "Bus fare and gas", 60, "monthly", "transportation", "demo_budget_3"),
+        new Budget("Entertainment", "Money set aside for things like movies, books, music.", 45, "weekly", "entertainment", "demo_budget_4")
     ]
 
     static fromId(id) {

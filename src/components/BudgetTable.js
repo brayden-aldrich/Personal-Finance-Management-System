@@ -1,8 +1,9 @@
 import React from "react";
 import { BudgetIcons, BudgetManager } from "../classes/Budget";
 import "./BudgetTable.scss"
-import { Button, Card, IconButton } from "@mui/material";
-import { Add, Delete, Edit, Payments } from "@mui/icons-material";
+import { Card, IconButton } from "@mui/material";
+import { Add, Delete, Edit, ListAlt, Payments } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 export default function BudgetTable() {
 
@@ -38,6 +39,14 @@ export default function BudgetTable() {
                   <IconButton color="error">
                     <Delete />
                   </IconButton>
+                  <div className="spacer"></div>
+                  <Link to={`/#${budget.id}`}>
+                    <IconButton >
+                      <ListAlt />
+                    </IconButton>
+                  </Link>
+
+
                 </div>
               </Card>
 
@@ -45,8 +54,8 @@ export default function BudgetTable() {
             })
           }
           <Card className="budget-add" variant="outlined">
-              <div><Add fontSize="large" /></div>
-              <div>New Budget</div>
+            <div><Add fontSize="large" /></div>
+            <div>New Budget</div>
           </Card>
         </div>
       </div>

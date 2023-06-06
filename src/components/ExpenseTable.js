@@ -4,9 +4,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import AddExpenseButton from './AddExpenseModal';
 import { ExpenseManager } from '../classes/Expense';
 import "./ExpenseTable.scss"
-import { Button, Card } from '@mui/material';
+import { Button, Card, Chip } from '@mui/material';
 import { DateTime } from 'luxon';
 import BudgetChip from './BudgetChip';
+import { BudgetManager } from '../classes/Budget';
 
 
 function ExpenseTable() { // function ExpenseTable({expenses})
@@ -14,6 +15,11 @@ function ExpenseTable() { // function ExpenseTable({expenses})
     const [selected, setSelected] = React.useState([]);
 
     const [expenses, setExpenses] = React.useState(ExpenseManager.expenses);
+
+    // Use the hash of the url to quickly filter a budget
+    const [filter, setFilter] = React.useState((window.location.hash ?? "") !== "" ? window.location.hash.substring(1) : 'all');
+
+    // setFilter();
 
     const refreshExpenses = () => {
         setExpenses([...ExpenseManager.expenses])
@@ -25,6 +31,12 @@ function ExpenseTable() { // function ExpenseTable({expenses})
         console.log('deleteing', selected)
         ExpenseManager.delete(...selected)
         refreshExpenses();
+    }
+
+    const filteredExpenses = () => {
+        if (filter === 'all') return ExpenseManager.expenses
+
+        return ExpenseManager.expenses.filter(exp => exp.budgets.includes(filter))
     }
 
     const spendingOver = (days) => {
@@ -81,10 +93,15 @@ function ExpenseTable() { // function ExpenseTable({expenses})
 
             <div className="toolbar">
                 <AddExpenseButton refreshParent={refreshExpenses} />
-                <div className='spacer'></div>
+                <div className='spacer'>
+                    <div className='filter-chip' onClick={() => setFilter('all')} ><Chip label="All" variant="outlined" style={{ "marginRight": "8px", "background": filter === "all" ? 'gainsboro' : 'transparent' }} /></div>
+                    {
+                        BudgetManager.budgets.map(budget => <div className='filter-chip' onClick={() => setFilter(budget.id)}><BudgetChip unselected={budget.id !== filter} id={budget.id} /></div>)
+                    }
+                </div>
                 {
                     (selected.length > 0) ?
-                        <Button variant="outlined" onClick={deleteSelected} color="error">
+                        <Button variant="outlined" className='button' onClick={deleteSelected} color="error">
                             Delete {selected.length} items
                         </Button> : <></>
                 }
@@ -94,7 +111,7 @@ function ExpenseTable() { // function ExpenseTable({expenses})
             <DataGrid
                 style={{ height: 450, width: '100%' }}
                 columns={columns}
-                rows={expenses}
+                rows={filteredExpenses()}
 
                 initialState={{
                     pagination: {

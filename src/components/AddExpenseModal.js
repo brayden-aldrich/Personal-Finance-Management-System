@@ -1,10 +1,10 @@
 import React from 'react';
-import { Grid, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment, Select, OutlinedInput, Box, MenuItem, Chip, FormControl, InputLabel } from '@mui/material';
+import { Grid, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment, Select, OutlinedInput, Box, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { DateTime } from 'luxon';
 import { useTheme } from '@mui/material/styles';
 import { Expense, ExpenseManager } from '../classes/Expense';
-import { BudgetIcons, BudgetManager } from '../classes/Budget';
+import { BudgetManager } from '../classes/Budget';
 import BudgetChip from './BudgetChip';
 
 
@@ -64,7 +64,7 @@ export default function AddExpenseButton({ refreshParent }) {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClickOpen}>
+            <Button className="button" variant="contained" onClick={handleClickOpen}>
                 Add Expense
             </Button>
 
