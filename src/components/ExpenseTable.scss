@@ -1,0 +1,31 @@
+.expense-table {
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-bottom: 1rem;
+        column-gap: 1rem;
+
+        & > div {
+            padding: 1rem;
+
+            small {
+                color: rgba(black, 0.4);
+                display: block;
+                // letter-spacing: 0.5px;
+                text-transform: uppercase;
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    .toolbar {
+        margin-bottom: 1rem;
+        display: flex;
+
+        .spacer {
+            flex-grow: 1;
+        }
+    }
+
+}
