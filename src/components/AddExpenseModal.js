@@ -4,6 +4,8 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { DateTime } from 'luxon';
 import { useTheme } from '@mui/material/styles';
 import { Expense, ExpenseManager } from '../classes/Expense';
+import { BudgetIcons, BudgetManager } from '../classes/Budget';
+import BudgetChip from './BudgetChip';
 
 
 function getBudgetDropdownItemStyle(name, all, theme) {
@@ -42,7 +44,7 @@ export default function AddExpenseButton({ refreshParent }) {
 
     const handleCreate = () => {
         // Create the new expense and add it to the manager
-        let expense = new Expense(title, date.toUnixInteger(), amount)
+        let expense = new Expense(title, date.toUnixInteger(), amount, budgets)
         ExpenseManager.add(expense);
         // Update the parent view
         refreshParent()
@@ -126,19 +128,17 @@ export default function AddExpenseButton({ refreshParent }) {
                                     input={<OutlinedInput id="select-multiple-chip" label="Budgets" />}
                                     renderValue={(budgets) => (
                                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                            {budgets.map((value) => (
-                                                <Chip key={value} label={value} />
-                                            ))}
+                                            {budgets.map((id) => <BudgetChip id={id} />)}
                                         </Box>
                                     )}
                                 >
-                                    {["Demo Budget 1", "Demo Budget 2"].map((name) => (
+                                    {BudgetManager.budgets.map((budget) => (
                                         <MenuItem
-                                            key={name}
-                                            value={name}
-                                            style={getBudgetDropdownItemStyle(name, budgets, theme)}
+                                            key={budget.id}
+                                            value={budget.id}
+                                            style={getBudgetDropdownItemStyle(budget.id, budgets, theme)}
                                         >
-                                            {name}
+                                            {budget.name}
                                         </MenuItem>
                                     ))}
                                 </Select>

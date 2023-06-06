@@ -6,6 +6,7 @@ import { ExpenseManager } from '../classes/Expense';
 import "./ExpenseTable.scss"
 import { Button, Card } from '@mui/material';
 import { DateTime } from 'luxon';
+import BudgetChip from './BudgetChip';
 
 
 function ExpenseTable() { // function ExpenseTable({expenses})
@@ -37,15 +38,12 @@ function ExpenseTable() { // function ExpenseTable({expenses})
         return `$${sum.toFixed(2)}`
     }
 
-
-    // const deleteExpense = (expenseId) => {
-    //     ExpenseManager.delete(expenseId)
-    //     refreshExpenses()
-    // }
-
     const columns = [
-        // { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'name', headerName: 'Expense', width: 450 },
+        { field: 'name', headerName: 'Expense', width: 200 },
+        {
+            field: 'budgets', headerName: 'Budget(s)', width: 250,
+            renderCell: (params) => (params.value ?? []).map((id) => <BudgetChip id={id} />),
+        },
         {
             field: 'date', headerName: 'Date', width: 100,
             valueGetter: (params) => params.row.formattedDate(),
