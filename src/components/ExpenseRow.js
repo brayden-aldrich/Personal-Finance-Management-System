@@ -1,7 +1,8 @@
-import { TableCell, TableRow } from "@mui/material"
+import { DeleteOutline, EditOutlined } from "@mui/icons-material"
+import { Button, ButtonGroup, TableCell, TableRow } from "@mui/material"
 
 function ExpenseRow({
-    expense }) {
+    expense, deleteExpense }) {
     return (
         <TableRow
             key={expense.id}
@@ -12,12 +13,15 @@ function ExpenseRow({
             </TableCell>
             <TableCell align="right">
                 {expense.formattedDate()}
-                </TableCell>
+            </TableCell>
             <TableCell align="right">
                 {expense.formattedAmount()}
-                </TableCell>
+            </TableCell>
             <TableCell align="right">
-
+                <ButtonGroup>
+                    <Button onClick={() => deleteExpense(expense.id)} color="error"><DeleteOutline /></Button>
+                    <Button><EditOutlined /></Button>
+                </ButtonGroup>
             </TableCell>
 
 

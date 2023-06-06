@@ -62,7 +62,7 @@ export default function AddExpenseButton({ refreshParent }) {
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button variant="contained" onClick={handleClickOpen}>
                 Add Expense
             </Button>
 

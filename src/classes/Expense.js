@@ -51,11 +51,27 @@ export class ExpenseManager {
     ]
 
     static add(...args) {
-        for (const arg of args) {
-            console.log("Adding Expense: ", args)
-            // Check for duplicates or something here
-            this.expenses.push(arg)
-        }
+
+        // probably not the best way to do this but it helps update the view state
+        this.expenses = [...args, ...this.expenses]
+
+    }
+
+    static delete(...expenseIds) {
+
+        console.log("bruh delete")
+
+        this.expenses = this.expenses.filter(exp => !expenseIds.includes(exp.id))
+
+        // for (const expenseId of expenseIds) {
+        //     let index = this.expenses.findIndex((val) => val.id === expenseId);
+        //     if (index !== -1) {
+        //         // Do any events that need to happen here
+        //         // Like updating storage or something
+        //         console.log("deleting an expense")
+        //         this.expenses.splice(index, 1);
+        //     }
+        // }
     }
 
 }
