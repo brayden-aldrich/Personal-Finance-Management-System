@@ -45,9 +45,9 @@ export class ExpenseManager {
     static expenses = [
         new Expense("Elmer's", DateTime.now().minus(1 * _day).toUnixInteger(), 18.33),
         new Expense("Taco Bell", DateTime.now().minus(2 * _day).toUnixInteger(), 5.99),
-        new Expense("DMV", DateTime.now().minus(3 * _day).toUnixInteger(), 100.00),
-        new Expense("Target", DateTime.now().minus(4 * _day).toUnixInteger(), 56.49),
-        new Expense("Safeway", DateTime.now().minus(5 * _day).toUnixInteger(), 4.39),
+        new Expense("DMV", DateTime.now().minus(9 * _day).toUnixInteger(), 100.00),
+        new Expense("Target", DateTime.now().minus(10 * _day).toUnixInteger(), 56.49),
+        new Expense("Safeway", DateTime.now().minus(12 * _day).toUnixInteger(), 4.39),
     ]
 
     static add(...args) {
