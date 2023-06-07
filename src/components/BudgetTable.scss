@@ -7,24 +7,7 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 1rem;
 
-        .budget-add {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-
-            border-style: dashed;
-            color: rgba(black, 0.4);
-            transition: all 0.15s;
-
-            cursor: pointer;
-
-            &:hover {
-                color: black;
-                background: rgba(black, 0.05);
-                border-style: solid;
-            }
-        }
+        
 
         .budget-item {
             display: flex;

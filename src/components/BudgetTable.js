@@ -1,13 +1,18 @@
 import React from "react";
 import { BudgetIcons, BudgetManager } from "../classes/Budget";
 import "./BudgetTable.scss"
-import { Card, IconButton } from "@mui/material";
+import { Card, IconButton, Tooltip } from "@mui/material";
 import { Add, Delete, Edit, ListAlt, Payments } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { AddBudgetModal } from "./AddBudgetModal";
 
 export default function BudgetTable() {
 
   const [budgets, setBudgets] = React.useState(BudgetManager.budgets);
+
+  const refreshData = () => {
+    setBudgets(BudgetManager.budgets);
+  }
 
   return (
     <>
@@ -41,9 +46,11 @@ export default function BudgetTable() {
                   </IconButton>
                   <div className="spacer"></div>
                   <Link to={`/#${budget.id}`}>
-                    <IconButton >
-                      <ListAlt />
-                    </IconButton>
+                    <Tooltip title="View Expenses">
+                      <IconButton >
+                        <ListAlt />
+                      </IconButton>
+                    </Tooltip>
                   </Link>
 
 
@@ -53,10 +60,7 @@ export default function BudgetTable() {
 
             })
           }
-          <Card className="budget-add" variant="outlined">
-            <div><Add fontSize="large" /></div>
-            <div>New Budget</div>
-          </Card>
+          <AddBudgetModal refreshParent={refreshData} />
         </div>
       </div>
 

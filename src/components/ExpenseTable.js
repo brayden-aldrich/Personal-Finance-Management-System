@@ -42,7 +42,7 @@ function ExpenseTable() { // function ExpenseTable({expenses})
     const spendingOver = (days) => {
         let sum = 0
         let longAgo = DateTime.now().toUnixInteger() - (days * 86400)
-        ExpenseManager.expenses.forEach((exp) => {
+        filteredExpenses().forEach((exp) => {
             if (exp.date > longAgo) {
                 sum += exp.amount
             }
@@ -53,7 +53,7 @@ function ExpenseTable() { // function ExpenseTable({expenses})
     const columns = [
         { field: 'name', headerName: 'Expense', width: 200 },
         {
-            field: 'budgets', headerName: 'Budget(s)', width: 250,
+            field: 'budgets', headerName: 'Budget(s)', width: 300,
             renderCell: (params) => (params.value ?? []).map((id) => <BudgetChip id={id} />),
         },
         {
@@ -74,7 +74,7 @@ function ExpenseTable() { // function ExpenseTable({expenses})
                 <Card variant="outlined">
                     <small>Total Expenses</small>
                     <h2>
-                        {expenses.length}
+                        {filteredExpenses().length}
                     </h2>
                 </Card>
                 <Card variant="outlined">
