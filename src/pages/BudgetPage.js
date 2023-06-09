@@ -1,87 +1,94 @@
-import React from "react";
-//import { useState } from "react";
-//import Budget from "../components/Budget";
+import React, { useState } from 'react';
 
 function BudgetPage() {
-    // const [expenseName, setExpenseName] = useState("");
-    // const [expenseCost, setExpenseCost] = useState(0);
-    // const [expenseDate, setExpenseDate] = useState("");
-    // const [budget, setBudget] = useState(null);
-  
-    // const handleExpenseNameChange = (event) => {
-    //   setExpenseName(event.target.value);
-    // };
-  
-    // const handleExpenseCostChange = (event) => {
-    //   setExpenseCost(event.target.value);
-    // };
-  
-    // const handleExpenseDateChange = (event) => {         ALSO CHATGPT GUESSES HERE
-    //   setExpenseDate(event.target.value);
-    // };
-  
-    // const handleCreateExpense = () => {
-    //   if (!budget) {
-    //     // Create a new budget object
-    //     const newBudget = new Budget("My Budget");
-    //     setBudget(newBudget);
-    //   }
-  
-    //   // Insert expense data into the budget object
-    //   budget.insertExpenseData(expenseName, expenseCost, expenseDate);
-  
-    //   // Reset input fields
-    //   setExpenseName("");
-    //   setExpenseCost(0);
-    //   setExpenseDate("");
-    // };
-  
-    // const handleExportToJson = () => {
-    //   if (budget) {
-    //     // Export expenses to JSON
-    //     budget.exportExpensesToJson();
-    //   }
-    // };
-  
-    // const handleImportFromJson = () => {
-    //   if (budget) {
-    //     // Import expenses from JSON (example filename: "mybudget.json")
-    //     budget.importExpensesFromJson("mybudget.json");
-    //   }
-    // };
-  
-    return (
-      <>
-        <h1>This is the budget page</h1>
+  const [budgetName, setBudgetName] = useState('');
+  const [budgetAmount, setBudgetAmount] = useState('');
+  const [isMonthly, setIsMonthly] = useState(true);
+  const [budgets, setBudgets] = useState([]);
 
-        <p>buttons for the budget options</p>
-  
-        {/* <input
-          type="text"
-          value={expenseName}
-          onChange={handleExpenseNameChange}
-          placeholder="Expense Name"
-        />
-  
-        <input
-          type="number"
-          value={expenseCost}                   // THIS IS LITERALLY ALL ONE GIANT CHATGPT GUESS
-          onChange={handleExpenseCostChange}
-          placeholder="Expense Cost"
-        />
-  
-        <input
-          type="text"
-          value={expenseDate}
-          onChange={handleExpenseDateChange}
-          placeholder="Expense Date"
-        />
-  
-        <button onClick={handleCreateExpense}>Add Expense</button>
-        <button onClick={handleExportToJson}>Export to JSON</button>
-        <button onClick={handleImportFromJson}>Import from JSON</button> */}
-      </>
-    );
-  }
-  
-  export default BudgetPage;
+  const handleBudgetNameChange = (e) => {
+    setBudgetName(e.target.value);
+  };
+
+  const handleBudgetAmountChange = (e) => {
+    setBudgetAmount(e.target.value);
+  };
+
+  const handlePeriodChange = (e) => {
+    setIsMonthly(e.target.value === 'monthly');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newBudget = {
+      name: budgetName,
+      amount: budgetAmount,
+      isMonthly: isMonthly
+    };
+
+    setBudgets([...budgets, newBudget]);
+
+    setBudgetName('');
+    setBudgetAmount('');
+  };
+
+  return (
+    <div>
+      <h1>Create a Budget</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="budgetName">Budget Name:</label>
+          <input
+            type="text"
+            id="budgetName"
+            value={budgetName}
+            onChange={handleBudgetNameChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="budgetAmount">Budget Amount:</label>
+          <input
+            type="number"
+            id="budgetAmount"
+            value={budgetAmount}
+            onChange={handleBudgetAmountChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="period">Period:</label>
+          <select id="period" onChange={handlePeriodChange} value={isMonthly ? 'monthly' : 'yearly'}>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+        <button type="submit">Create Budget</button>
+      </form>
+
+      <h2>Budgets</h2>
+      {budgets.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Period</th>
+            </tr>
+          </thead>
+          <tbody>
+            {budgets.map((budget, index) => (
+              <tr key={index}>
+                <td>{budget.name}</td>
+                <td>{budget.amount}</td>
+                <td>{budget.isMonthly ? 'Monthly' : 'Yearly'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No budgets created yet.</p>
+      )}
+    </div>
+  );
+}
+
+export default BudgetPage;
