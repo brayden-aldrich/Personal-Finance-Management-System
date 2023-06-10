@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function BudgetPage() {
   const [budgetName, setBudgetName] = useState('');
@@ -32,6 +32,20 @@ function BudgetPage() {
     setBudgetAmount('');
   };
 
+  useEffect(() => {
+    const fetchBudgets = async () => {
+      try {
+        const response = await fetch('/api/budgets');
+        const data = await response.json();
+        setBudgets(data);
+      } catch (error) {
+        console.error('Error fetching budgets:', error);
+      }
+    };
+
+    fetchBudgets();
+  }, []);
+
   return (
     <div>
       <h1>Create a Budget</h1>
@@ -56,7 +70,11 @@ function BudgetPage() {
         </div>
         <div>
           <label htmlFor="period">Period:</label>
-          <select id="period" onChange={handlePeriodChange} value={isMonthly ? 'monthly' : 'yearly'}>
+          <select
+            id="period"
+            onChange={handlePeriodChange}
+            value={isMonthly ? 'monthly' : 'yearly'}
+          >
             <option value="monthly">Monthly</option>
             <option value="yearly">Yearly</option>
           </select>
