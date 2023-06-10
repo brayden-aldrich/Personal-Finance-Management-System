@@ -1,0 +1,20 @@
+[
+    {
+      "id": 1,
+      "name": "Groceries",
+      "amount": 200,
+      "frequency": "monthly"
+    },
+    {
+      "id": 2,
+      "name": "Rent",
+      "amount": 1000,
+      "frequency": "monthly"
+    },
+    {
+      "id": 3,
+      "name": "Internet",
+      "amount": 50,
+      "frequency": "monthly"
+    }
+  ]
