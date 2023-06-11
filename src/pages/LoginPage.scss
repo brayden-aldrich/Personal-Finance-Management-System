@@ -1,0 +1,62 @@
+@import "../variables.scss";
+
+#sign-in-header{
+    color: $appColor;
+    text-align: center;
+    margin-bottom: 30px;
+}
+#loginPanel{
+    border: 1px solid hsl(0, 0%, 85%);
+    box-shadow: 0 0 3px hsl(0,0%,85%);
+    background: color-mix(in srgb, $appColor, transparent 93%);
+    border-radius: 8px;
+    margin: 0 auto;
+    min-width: 40ch;
+    width: 60%;
+    padding: 10px 0;
+
+    //Labels and text boxes
+    .loginLabel,
+    .loginInput{
+        margin: 5px 0;
+        display: block;
+    }
+    .loginLabel{
+        width: 100%;
+        text-align: center;
+    }
+
+    //Text boxes
+    .loginInput{
+        margin: 0 auto;
+        height: 2em;
+        width: 40ch;
+        border-radius: 15px;
+        padding: 5px 8px;
+        background: #fff;
+        border: 2px solid color-mix(in srgb, $appColor, transparent 10%);
+        
+        &:focus-visible{
+            border-color: $appColor;
+            outline: none;
+            box-shadow: 0 0 3px $appColor;
+        }
+
+        &::placeholder{
+            color: rgb(0,0,0,0.7);
+        }
+    }
+
+    //Submit button
+    #loginSubmit{
+        margin-top: 20px;
+        background: $appColor;
+        color: #fff;
+        transition: .25s;
+
+        &:hover{
+            background: #fff;
+            color: $appColor;
+        }
+    }
+}
