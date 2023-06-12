@@ -89,6 +89,15 @@ function ExpenseTable() { // function ExpenseTable({expenses})
                         {spendingOver(7)}
                     </h2>
                 </Card>
+                <Card variant="outlined">
+                    <small>Remaining Budget</small>
+                    <h2>
+                        {BudgetManager.budgets.map(budget => budget.id === filter && budget.timePeriod === "daily" ? "$" + (budget.amount - Number(spendingOver(1).replace('$',''))) : 
+                                                            budget.id === filter && budget.timePeriod === "weekly" ? "$" + (budget.amount - Number(spendingOver(7).replace('$',''))) :
+                                                            budget.id === filter && budget.timePeriod === "monthly" ? "$" + (budget.amount - Number(spendingOver(30).replace('$',''))) :
+                                                            budget.id === filter && budget.timePeriod === "annual" ? "$" + (budget.amount - Number(spendingOver(365).replace('$',''))) :" ")}
+                    </h2>
+                </Card>
             </div>
 
             <div className="toolbar">
