@@ -39,9 +39,9 @@ function ExpenseTable() { // function ExpenseTable({expenses})
         return ExpenseManager.expenses.filter(exp => exp.budgets.includes(filter))
     }
 
-    const spendingOver = (days) => {
+    const spendingOver = (period) => {
         let sum = 0
-        let longAgo = DateTime.now().toUnixInteger() - (days * 86400)
+        let longAgo = DateTime.now().startOf(period).toUnixInteger()
         filteredExpenses().forEach((exp) => {
             if (exp.date > longAgo) {
                 sum += exp.amount
@@ -80,22 +80,22 @@ function ExpenseTable() { // function ExpenseTable({expenses})
                 <Card variant="outlined">
                     <small>Spending This Month</small>
                     <h2>
-                        {spendingOver(30)}
+                        {spendingOver('month')}
                     </h2>
                 </Card>
                 <Card variant="outlined">
                     <small>Spending This Week</small>
                     <h2>
-                        {spendingOver(7)}
+                        {spendingOver('week')}
                     </h2>
                 </Card>
                 <Card variant="outlined">
                     <small>Remaining Budget</small>
                     <h2>
-                        {BudgetManager.budgets.map(budget => budget.id === filter && budget.timePeriod === "daily" ? "$" + (budget.amount - Number(spendingOver(1).replace('$',''))) : 
-                                                            budget.id === filter && budget.timePeriod === "weekly" ? "$" + (budget.amount - Number(spendingOver(7).replace('$',''))) :
-                                                            budget.id === filter && budget.timePeriod === "monthly" ? "$" + (budget.amount - Number(spendingOver(30).replace('$',''))) :
-                                                            budget.id === filter && budget.timePeriod === "annual" ? "$" + (budget.amount - Number(spendingOver(365).replace('$',''))) :" ")}
+                        {BudgetManager.budgets.map(budget => budget.id === filter && budget.timePeriod === "daily" ? "$" + (budget.amount - Number(spendingOver('day').replace('$',''))) : 
+                                                            budget.id === filter && budget.timePeriod === "weekly" ? "$" + (budget.amount - Number(spendingOver('week').replace('$',''))) :
+                                                            budget.id === filter && budget.timePeriod === "monthly" ? "$" + (budget.amount - Number(spendingOver('month').replace('$',''))) :
+                                                            budget.id === filter && budget.timePeriod === "annual" ? "$" + (budget.amount - Number(spendingOver('year').replace('$',''))) :" ")}
                     </h2>
                 </Card>
             </div>
