@@ -1,0 +1,67 @@
+.budget-grid .budget-add {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    border-style: dashed;
+    color: rgba(black, 0.4);
+    transition: all 0.15s;
+
+    cursor: pointer;
+
+    &:hover {
+        color: black;
+        background: rgba(black, 0.05);
+        border-style: solid;
+        transform: scale(0.95);
+    }
+}
+
+.budget-add-dialog {
+    .floating-label {
+        margin-bottom: 8px;
+        display: inline-block;
+        color: rgba(black, 0.6);
+    }
+
+    .MuiButton-textPrimary {
+        color: var(--currColor);
+    }
+
+    .MuiButton-containedPrimary {
+        background-color: var(--currColor);
+        &:hover {
+            opacity: 0.9;
+            background-color: var(--currColor);
+        }
+    }
+
+    .icon-tabs {
+        margin-bottom: 1rem;
+
+        .icon-tab.Mui-selected {
+            border-radius: 16px;
+            overflow: hidden;
+            color: white;
+            z-index: 2;
+            transition: all 0.2s;
+
+            span {
+                color: var(--color, --currColor);
+                z-index: -1;
+            }
+            svg {
+                
+                color: white;
+                z-index: 10;
+            }
+        }
+
+        .MuiTabs-indicator {
+            height: 48px;
+            border-radius: 16px;
+            background-color: var(--currColor) !important;
+        }
+    }
+}

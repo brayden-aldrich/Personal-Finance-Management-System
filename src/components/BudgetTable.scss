@@ -1,0 +1,53 @@
+.budget-table {
+    width: 100%;
+    margin-top: 2rem;
+
+    .budget-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+
+        
+
+        .budget-item {
+            display: flex;
+            flex-direction: column;
+
+            .header {
+                padding: 1rem;
+                color: white;
+                border-bottom: 1pt solid rgba(black, 0.12);
+                display: flex;
+
+                line-height: 100%;
+                align-items: center;
+            }
+
+            .actions {
+                padding: 0.5rem 1rem;
+                display: flex;
+                align-items: center;
+                border-top: 1pt solid rgba(black, 0.12);
+
+                .delete {
+                    color: red;
+                }
+            }
+
+            .spacer {
+                flex-grow: 1;
+            }
+
+            .content {
+                padding: 1rem;
+                flex-grow: 1;
+
+                p {
+                    margin-top: 8px;
+                    color: rgba(black, 0.6);
+                    font-size: 11pt;
+                }
+            }
+        }
+    }
+}

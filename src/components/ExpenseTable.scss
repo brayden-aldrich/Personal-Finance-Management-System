@@ -1,5 +1,4 @@
 .expense-table {
-
     .stats {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -22,10 +21,32 @@
     .toolbar {
         margin-bottom: 1rem;
         display: flex;
+        align-items: center;
+        gap: 1rem;
 
         .spacer {
             flex-grow: 1;
+            overflow-x: scroll;
+            overflow-y: scroll;
+            white-space: nowrap;
+            scrollbar-width: 0px;
+        }
+
+        .button {
+            white-space: nowrap;
+        }
+
+        .filter-chip {
+            * {
+                cursor: pointer !important;
+            }
+
+            display: inline-block;
+            transition: transform 0.15s;
+
+            &:hover {
+                transform: scale(0.95);
+            }
         }
     }
-
 }

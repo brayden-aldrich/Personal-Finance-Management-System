@@ -17,11 +17,15 @@ export class Expense {
     /** @type {number} */
     amount
 
-    constructor(name, date, amount) {
+    /** @type {string[]} */
+    budgets
+
+    constructor(name, date, amount, budgets, id = nanoid(6)) {
         this.name = name
         this.date = date
         this.amount = amount
-        this.id = nanoid(6)
+        this.budgets = budgets
+        this.id = id
     }
 
     formattedDate() {
@@ -43,18 +47,18 @@ export class ExpenseManager {
 
     // TODO: Delete these demo values
     static expenses = [
-        new Expense("Elmer's", DateTime.now().minus(1 * _day).toUnixInteger(), 18.33),
-        new Expense("Taco Bell", DateTime.now().minus(2 * _day).toUnixInteger(), 5.99),
-        new Expense("DMV", DateTime.now().minus(9 * _day).toUnixInteger(), 100.00),
-        new Expense("Target", DateTime.now().minus(10 * _day).toUnixInteger(), 56.49),
-        new Expense("Safeway", DateTime.now().minus(12 * _day).toUnixInteger(), 4.39),
+        new Expense("Elmer's", DateTime.now().minus(1 * _day).toUnixInteger(), 18.33, ["demo_budget_2"]),
+        new Expense("Taco Bell", DateTime.now().minus(2 * _day).toUnixInteger(), 5.99, ["demo_budget_2"]),
+        new Expense("DMV", DateTime.now().minus(9 * _day).toUnixInteger(), 100.00, []),
+        new Expense("Hulu", DateTime.now().minus(9 * _day).toUnixInteger(), 5.00, ["demo_budget_4"]),
+        new Expense("Target", DateTime.now().minus(10 * _day).toUnixInteger(), 56.49, ["demo_budget_1"]),
+        new Expense("Safeway", DateTime.now().minus(12 * _day).toUnixInteger(), 4.39, ["demo_budget_1"]),
     ]
 
     static add(...args) {
 
         // probably not the best way to do this but it helps update the view state
         this.expenses = [...args, ...this.expenses]
-
     }
 
     static delete(...expenseIds) {
