@@ -65,7 +65,7 @@ export class Budget {
     /** @type {string} */
     description;
 
-    /** @type {"weekly" | "daily" | "annual"} */
+    /** @type {"weekly" | "monthly" | "annual"} */
     timePeriod;
 
     /** @type {"food" | "entertainment" | "grocery" | "home" | "transportation" | "generic"} */
@@ -147,13 +147,15 @@ export class Budget {
 }
 
 const _demoBudgets = [
-    new Budget("Grocery", "This is my grocery budget!", 100, "weekly", "grocery", "demo_budget_1"),
+    new Budget("Grocery", "This is my grocery budget!", 100, "monthly", "grocery", "demo_budget_1"),
     new Budget("Eating Out", "Money set aside for going to restaurants each month", 250, "monthly", "food", "demo_budget_2"),
     new Budget("Transportation", "Bus fare and gas", 60, "monthly", "transportation", "demo_budget_3"),
     new Budget("Entertainment", "Money set aside for things like movies, books, music.", 45, "weekly", "entertainment", "demo_budget_4")
 ]
 
 export class BudgetManager {
+
+    /** @type {Budget[]} */
     static budgets = []
 
     static initFromStorage() {

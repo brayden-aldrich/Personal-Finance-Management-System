@@ -2,6 +2,7 @@ import TimeAgo from "javascript-time-ago"
 import en from 'javascript-time-ago/locale/en'
 import { DateTime } from "luxon"
 import { nanoid } from "nanoid"
+import { BudgetManager } from "./Budget"
 TimeAgo.addDefaultLocale(en)
 
 export class Expense {
@@ -54,20 +55,21 @@ export class Expense {
 
 }
 
-const _day = 100000000
+const _day = 86400 * 1000
 const _demoExpenses = [
     new Expense("Elmer's", DateTime.now().minus(1 * _day).toUnixInteger(), 18.33, ["demo_budget_2"]),
     new Expense("Taco Bell", DateTime.now().minus(2 * _day).toUnixInteger(), 5.99, ["demo_budget_2"]),
-    new Expense("DMV", DateTime.now().minus(9 * _day).toUnixInteger(), 100.00, []),
-    new Expense("Hulu", DateTime.now().minus(9 * _day).toUnixInteger(), 5.00, ["demo_budget_4"]),
-    new Expense("Target", DateTime.now().minus(10 * _day).toUnixInteger(), 56.49, ["demo_budget_1"]),
-    new Expense("Safeway", DateTime.now().minus(12 * _day).toUnixInteger(), 4.39, ["demo_budget_1"]),
+    new Expense("DMV", DateTime.now().minus(4 * _day).toUnixInteger(), 100.00, []),
+    new Expense("Hulu", DateTime.now().minus(6 * _day).toUnixInteger(), 5.00, ["demo_budget_4"]),
+    new Expense("Target", DateTime.now().minus(9 * _day).toUnixInteger(), 56.49, ["demo_budget_1"]),
+    new Expense("Safeway", DateTime.now().minus(10 * _day).toUnixInteger(), 4.39, ["demo_budget_1"]),
 ]
 
 // This is meant to be abstract; instantiating won't really do anything
 export class ExpenseManager {
 
     // TODO: Delete these demo values
+    /** @type {Expense[]} */
     static expenses = []
 
     static save() {
@@ -77,6 +79,20 @@ export class ExpenseManager {
     static initFromStorage() {
         let json = localStorage.getItem("expenses")
         this.expenses = json ? JSON.parse(json).map(e => Expense.fromJsonObj(e)) : _demoExpenses
+    }
+
+    // Expenses for budget id where the price is incremented (for graphs)
+    static additiveRange(id) {
+        var sum = 0
+        return this.expenses.filter(e => e.budgets.includes(id) && e.date > DateTime.now().startOf({
+            'weekly':'week',
+            'monthly': 'month',
+            'annual': 'year'
+          }[BudgetManager.fromId(id).timePeriod]).toUnixInteger()).sort((e1, e2) => e1.date - e2.date).map(e => {
+            sum += e.amount
+            e.amount = sum
+            return e
+        })
     }
 
     static add(...expenses) {

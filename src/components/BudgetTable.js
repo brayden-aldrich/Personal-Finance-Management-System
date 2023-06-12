@@ -2,7 +2,7 @@ import React from "react";
 import { BudgetIcons, BudgetManager } from "../classes/Budget";
 import "./BudgetTable.scss"
 import { Card, IconButton, Tooltip } from "@mui/material";
-import { Add, Delete, Edit, ListAlt, Payments } from "@mui/icons-material";
+import { Add, AutoGraph, Delete, Edit, ListAlt, Payments } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { AddBudgetModal } from "./AddBudgetModal";
 
@@ -49,6 +49,13 @@ export default function BudgetTable() {
                     <Tooltip title="View Expenses">
                       <IconButton >
                         <ListAlt />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                  <Link to={`/balance#${budget.id}`}>
+                    <Tooltip title="View Graph">
+                      <IconButton >
+                        <AutoGraph />
                       </IconButton>
                     </Tooltip>
                   </Link>
