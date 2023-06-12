@@ -85,10 +85,10 @@ export class ExpenseManager {
     static additiveRange(id) {
         var sum = 0
         return this.expenses.filter(e => e.budgets.includes(id) && e.date > DateTime.now().startOf({
-            'weekly':'week',
+            'weekly': 'week',
             'monthly': 'month',
             'annual': 'year'
-          }[BudgetManager.fromId(id).timePeriod]).toUnixInteger()).sort((e1, e2) => e1.date - e2.date).map(e => {
+        }[BudgetManager.fromId(id).timePeriod]).toUnixInteger()).sort((e1, e2) => e1.date - e2.date).map(e => {
             sum += e.amount
             e.amount = sum
             return e
@@ -106,6 +106,14 @@ export class ExpenseManager {
         this.expenses = this.expenses.filter(exp => !expenseIds.includes(exp.id))
         // Save
         this.save()
+    }
+
+    static downloadAsJSON() {
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.expenses.map(exp => exp.asJsonObj())));
+        var dlAnchorElem = document.getElementById('downloadAnchorElem');
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", "expenses.json");
+        dlAnchorElem.click();
     }
 }
 

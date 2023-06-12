@@ -182,4 +182,12 @@ export class BudgetManager {
         // Save data
         this.save()
     }
+
+    static downloadAsJSON() {
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.budgets.map(exp => exp.asJsonObj())));
+        var dlAnchorElem = document.getElementById('downloadAnchorElem');
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", "budgets.json");
+        dlAnchorElem.click();
+    }
 }
