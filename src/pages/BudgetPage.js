@@ -7,10 +7,8 @@ function BudgetPage() {
   
     return (
       <>
-        <h1>This is the budget page</h1>
-
-        <p>buttons for the budget options</p>
-
+        <h1>Budget</h1>
+        <p>Below are all your sub-budgets. To create a new sub-budget, simply click the button that says "New Budget".</p>
         <BudgetTable />
   
       </>
