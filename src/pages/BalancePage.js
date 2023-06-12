@@ -98,7 +98,7 @@ function BudgetPage() {
   const chartSeries = [
     {
       name: 'Amount Spent',
-      type: 'line',
+      type: 'area',
       data: expenses.map(expense => ({
         x: new Date(expense.date).getTime(),
         y: expense.amount,

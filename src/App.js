@@ -8,8 +8,27 @@ import BalancePage from './pages/BalancePage.js';
 import LoginPage from './pages/LoginPage.js';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
+import UserManager from './userdata';
+
+import { WelcomeCreateAccount, WelcomePleaseLogin } from './pages/WelcomePages';
 
 function App() {
+
+    const accountExists = UserManager.anyAccountExists()
+    const isLoggedIn = UserManager.isLoggedIn
+
+    if (!isLoggedIn) {
+        return (
+            <Router>
+                <Routes>
+                    <Route path="/" element={accountExists ? <WelcomePleaseLogin /> : <WelcomeCreateAccount />} />
+                    <Route path="/login" element={<LoginPage />} />
+                </Routes>
+            </Router>
+
+        )
+    }
+
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterLuxon}>

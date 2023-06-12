@@ -4,11 +4,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ExpenseManager } from './classes/Expense';
 import { BudgetManager } from './classes/Budget';
+import UserManager from './userdata';
 
 
 // Load everything from localStorage
 ExpenseManager.initFromStorage()
 BudgetManager.initFromStorage()
+UserManager.initUserManager()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

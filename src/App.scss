@@ -12,3 +12,20 @@
     max-width: 52rem;
     margin: auto;
 }
+
+.welcome-container {
+    max-width: 50rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 8px;
+    
+    p {
+        margin-bottom: 16px;
+    }
+
+}
