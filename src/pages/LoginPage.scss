@@ -39,6 +39,17 @@
             color: rgb(0,0,0,0.7);
         }
     }
+    //Error Message
+    .error-message{
+        display: block;
+        width: fit-content;
+        margin: 15px auto 0 auto;
+        padding: 5px;
+        border-radius: 4px;
+        color: #fff;
+        background: #f00;
+        box-shadow: 0 0 3px #f00;
+    }
 
     //Panel Buttons
     .panel-button{
@@ -59,7 +70,7 @@
     }
 
     .panelBottom{
-        margin-top: 40px;
+        margin-top: 20px;
         text-align: center;
     }
 

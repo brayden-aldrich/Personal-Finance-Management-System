@@ -106,9 +106,9 @@ const LoginForm = () => {
                     Sign Up
                 </button>
             ) : (
-                <button type="submit">Complete Sign Up</button>
+                <button class="login-submit panel-button loginPanelItem" type="submit">Complete Sign Up</button>
             )}
-            {errorMessage && <div>{errorMessage}</div>}
+            {errorMessage && <div class="error-message">{errorMessage}</div>}
             {isSigningUp && (
                 <p class="panelBottom">
                     Already have an account?{' '}
