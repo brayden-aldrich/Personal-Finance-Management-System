@@ -134,6 +134,9 @@ function ExpenseTable() { // function ExpenseTable({expenses})
                 pageSizeOptions={[25, 50]}
                 checkboxSelection
             />
+
+            <br></br>
+            
         </div>
 
     );
