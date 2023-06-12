@@ -8,13 +8,13 @@ function Navbar() {
     <nav id="navbar">
       <div className="flex-container">
         <h1 id="title">MyFinancePal</h1>
-        <ul class="left">
-          <li class="navButton"><NavLink to="/">Home Page</NavLink></li>
-          <li class="navButton"><NavLink to="/budget">Budget</NavLink></li>
-          <li class="navButton"><NavLink to="/balance">Balance</NavLink></li>
+        <ul className="left">
+          <li className="navButton"><NavLink to="/">Home Page</NavLink></li>
+          <li className="navButton"><NavLink to="/budget">Budget</NavLink></li>
+          <li className="navButton"><NavLink to="/balance">Balance</NavLink></li>
         </ul>
-        <ul class="right">
-          <li class="navButton"><NavLink to="/login">Login</NavLink></li>
+        <ul className="right">
+          <li className="navButton"><NavLink to="/login">Login</NavLink></li>
         </ul>
       </div>
 

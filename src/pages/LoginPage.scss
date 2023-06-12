@@ -3,7 +3,7 @@
 #sign-in-header{
     color: $appColor;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 #loginPanel{
     border: 1px solid hsl(0, 0%, 85%);
@@ -15,22 +15,15 @@
     width: 60%;
     padding: 10px 0;
 
-    //Labels and text boxes
-    .loginLabel,
-    .loginInput{
-        margin: 5px 0;
+    .loginPanelItem{
         display: block;
-    }
-    .loginLabel{
-        width: 100%;
-        text-align: center;
+        height: 2em;
+        width: 40ch;
     }
 
     //Text boxes
     .loginInput{
-        margin: 0 auto;
-        height: 2em;
-        width: 40ch;
+        margin: 10px auto;
         border-radius: 15px;
         padding: 5px 8px;
         background: #fff;
@@ -47,16 +40,32 @@
         }
     }
 
-    //Submit button
-    #loginSubmit{
-        margin-top: 20px;
+    //Panel Buttons
+    .panel-button{
         background: $appColor;
         color: #fff;
-        transition: .25s;
-
+        transition: background .25s;
+        border: 2px solid transparent;
+        
         &:hover{
+            border: 2px solid $appColor;
             background: #fff;
             color: $appColor;
         }
+    }
+    .login-submit{
+        margin: 20px auto 0 auto;
+        border-radius: 15px;
+    }
+
+    .panelBottom{
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .link-button{
+        margin-left: 10px;
+        border-radius: 4px;
+        padding: 5px;
     }
 }

@@ -1,52 +1,134 @@
 import React from 'react';
-import ExpenseRow from './ExpenseRow';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Expense } from '../classes/Expense';
+// import ExpenseRow from './ExpenseRow';
+import { DataGrid } from '@mui/x-data-grid';
+import AddExpenseButton from './AddExpenseModal';
+import { ExpenseManager } from '../classes/Expense';
+import "./ExpenseTable.scss"
+import { Button, Card, Chip } from '@mui/material';
+import { DateTime } from 'luxon';
+import BudgetChip from './BudgetChip';
+import { BudgetManager } from '../classes/Budget';
 
-const day = 100000000
-
-const expenses = [
-    new Expense("Elmer's", Date.now() - 1 * day, 18.33),
-    new Expense("Taco Bell", Date.now() - 2 * day, 5.99),
-    new Expense("DMV", Date.now() - 3 * day, 100.00),
-    new Expense("Target", Date.now() - 4 * day, 56.49),
-    new Expense("Safeway", Date.now() - 5 * day, 4.39),
-]
 
 function ExpenseTable() { // function ExpenseTable({expenses})
+
+    const [selected, setSelected] = React.useState([]);
+
+    const [expenses, setExpenses] = React.useState(ExpenseManager.expenses);
+
+    // Use the hash of the url to quickly filter a budget
+    const [filter, setFilter] = React.useState((window.location.hash ?? "") !== "" ? window.location.hash.substring(1) : 'all');
+
+    // setFilter();
+
+    const refreshExpenses = () => {
+        setExpenses([...ExpenseManager.expenses])
+        console.log("updated expenses: ", expenses);
+    }
+
+    const deleteSelected = () => {
+        console.log(ExpenseManager.expenses)
+        console.log('deleteing', selected)
+        ExpenseManager.delete(...selected)
+        refreshExpenses();
+    }
+
+    const filteredExpenses = () => {
+        if (filter === 'all') return ExpenseManager.expenses
+
+        return ExpenseManager.expenses.filter(exp => exp.budgets.includes(filter))
+    }
+
+    const spendingOver = (days) => {
+        let sum = 0
+        let longAgo = DateTime.now().toUnixInteger() - (days * 86400)
+        filteredExpenses().forEach((exp) => {
+            if (exp.date > longAgo) {
+                sum += exp.amount
+            }
+        })
+        return `$${sum.toFixed(2)}`
+    }
+
+    const columns = [
+        { field: 'name', headerName: 'Expense', width: 200 },
+        {
+            field: 'budgets', headerName: 'Budget(s)', width: 300,
+            renderCell: (params) => (params.value ?? []).map((id) => <BudgetChip id={id} />),
+        },
+        {
+            field: 'date', headerName: 'Date', width: 100,
+            valueGetter: (params) => params.row.formattedDate(),
+        },
+        {
+            field: 'amount', headerName: 'Amount', width: 100, type: 'number',
+            valueGetter: (params) => params.row.formattedAmount(),
+        },
+    ]
+
+
     return (
+        <div className="expense-table">
 
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Expense</TableCell>
-                        <TableCell align="right">Date</TableCell>
-                        <TableCell align="right">Amount</TableCell>
-                        <TableCell align="right" />
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {expenses.map((row) => (
-                        <ExpenseRow expense={row} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+            <div className="stats">
+                <Card variant="outlined">
+                    <small>Total Expenses</small>
+                    <h2>
+                        {filteredExpenses().length}
+                    </h2>
+                </Card>
+                <Card variant="outlined">
+                    <small>Spending This Month</small>
+                    <h2>
+                        {spendingOver(30)}
+                    </h2>
+                </Card>
+                <Card variant="outlined">
+                    <small>Spending This Week</small>
+                    <h2>
+                        {spendingOver(7)}
+                    </h2>
+                </Card>
+            </div>
 
-        // <table>
-        //     <thead>
-        //         <tr>
-        //             <th>Name</th>
-        //             <th>Amount</th>
-        //             <th>Date</th>
-        //         </tr>
-        //     </thead>
-        //     <tbody>
-        //         {/* <ExpenseRow></ExpenseRow>   <ExpenseRow></ExpenseRow {expenses}> */}
-        //     </tbody>
-        // </table>
+            <div className="toolbar">
+                <AddExpenseButton refreshParent={refreshExpenses} />
+                <div className='spacer'>
+                    <div className='filter-chip' onClick={() => setFilter('all')} ><Chip label="All" variant="outlined" style={{ "marginRight": "8px", "background": filter === "all" ? 'gainsboro' : 'transparent' }} /></div>
+                    {
+                        BudgetManager.budgets.map(budget => <div className='filter-chip' onClick={() => setFilter(budget.id)}><BudgetChip unselected={budget.id !== filter} id={budget.id} /></div>)
+                    }
+                </div>
+                {
+                    (selected.length > 0) ?
+                        <Button variant="outlined" className='button' onClick={deleteSelected} color="error">
+                            Delete {selected.length} items
+                        </Button> : <></>
+                }
+
+            </div>
+
+            <DataGrid
+                style={{ height: 450, width: '100%' }}
+                columns={columns}
+                rows={filteredExpenses()}
+
+                initialState={{
+                    pagination: {
+                        paginationModel: { page: 0, pageSize: 25 },
+                    },
+                }}
+                onRowSelectionModelChange={(newSelected) => {
+                    setSelected(newSelected);
+                }}
+                rowSelectionModel={selected}
+                pageSizeOptions={[25, 50]}
+                checkboxSelection
+            />
+        </div>
+
     );
+
 }
 
 export default ExpenseTable;
