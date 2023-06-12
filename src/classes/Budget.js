@@ -34,7 +34,7 @@ export const BudgetTimePeriods = {
 class BudgetIcon {
     color
     icon
-    constructor(color,icon) {
+    constructor(color, icon) {
         this.color = color;
         this.icon = icon;
     }
@@ -63,9 +63,6 @@ export class Budget {
     id;
 
     /** @type {string} */
-    name;
-
-    /** @type {string} */
     description;
 
     /** @type {"weekly" | "daily" | "annual"} */
@@ -92,6 +89,21 @@ export class Budget {
         this.id = id
     }
 
+    static fromJsonObj(json) {
+        return new Budget(json.name, json.description, json.amount, json.timePeriod, json.icon, json.id)
+    }
+
+    asJsonObj() {
+        return {
+            name: this.name,
+            id: this.id,
+            description: this.description,
+            timePeriod: this.timePeriod,
+            icon: this.icon,
+            amount: this.amount
+        }
+    }
+
     // insertExpenseData(name, date, amount) {
     //     // #First, insert info about the expense into a temp dict
     //     var newExpense = Expense(name, date, amount)
@@ -108,49 +120,64 @@ export class Budget {
     // }
 
     // #Exports the expense array to a json file
-    exportExpensesToJson() {
-        let jsonFileName = this.simplifyName() + ".json"
+    // exportExpensesToJson() {
+    //     let jsonFileName = this.simplifyName() + ".json"
 
-        var data = JSON.stringify(this.expenseArray)
-        // fs.writeFile(jsonFileName, data, (error) => {
-        //     if (error) {
-        //         console.error(error)
-        //         throw error
-        //     }
-        // })
-    }
+    //     var data = JSON.stringify(this.expenseArray)
+    //     // fs.writeFile(jsonFileName, data, (error) => {
+    //     //     if (error) {
+    //     //         console.error(error)
+    //     //         throw error
+    //     //     }
+    //     // })
+    // }
 
     // #Imports a new expense array from a json file
     // #   Note: Overwrites the previous expense array
-    importExpensesFromJson(filename) {
-        // fs.readFile(filename, (error, data) => {
-        //     if (error) {
-        //         console.error(error)
-        //         throw error
-        //     }
-        //     this.expenseArray = JSON.parse(data)
-        // })
-    }
+    // importExpensesFromJson(filename) {
+    //     // fs.readFile(filename, (error, data) => {
+    //     //     if (error) {
+    //     //         console.error(error)
+    //     //         throw error
+    //     //     }
+    //     //     this.expenseArray = JSON.parse(data)
+    //     // })
+    // }
 
 }
 
+const _demoBudgets = [
+    new Budget("Grocery", "This is my grocery budget!", 100, "weekly", "grocery", "demo_budget_1"),
+    new Budget("Eating Out", "Money set aside for going to restaurants each month", 250, "monthly", "food", "demo_budget_2"),
+    new Budget("Transportation", "Bus fare and gas", 60, "monthly", "transportation", "demo_budget_3"),
+    new Budget("Entertainment", "Money set aside for things like movies, books, music.", 45, "weekly", "entertainment", "demo_budget_4")
+]
+
 export class BudgetManager {
-    static budgets = [
-        new Budget("Grocery", "This is my grocery budget!", 100, "weekly", "grocery", "demo_budget_1"),
-        new Budget("Eating Out", "Money set aside for going to restaurants each month", 250, "monthly", "food", "demo_budget_2"),
-        new Budget("Transportation", "Bus fare and gas", 60, "monthly", "transportation", "demo_budget_3"),
-        new Budget("Entertainment", "Money set aside for things like movies, books, music.", 45, "weekly", "entertainment", "demo_budget_4")
-    ]
+    static budgets = []
+
+    static initFromStorage() {
+        let json = localStorage.getItem("budgets")
+        this.budgets = json ? JSON.parse(json).map(b => Budget.fromJsonObj(b)) : _demoBudgets
+    }
+
+    static save() {
+        localStorage.setItem("budgets", JSON.stringify(this.budgets.map(b => b.asJsonObj())))
+    }
 
     static fromId(id) {
         return this.budgets.find(b => b.id === id)
     }
 
-    static add(...args) {
-        this.budgets = [...args, ...this.budgets]
+    static add(...budgets) {
+        this.budgets = [...this.budgets, ...budgets]
+        // Save data
+        this.save()
     }
 
     static delete(...ids) {
         this.budgets = this.budgets.filter(exp => !ids.includes(exp.id))
+        // Save data
+        this.save()
     }
 }

@@ -38,45 +38,58 @@ export class Expense {
         return `$${this.amount.toFixed(2)}`
     }
 
+    static fromJsonObj(json) {
+        return new Expense(json.name, json.date, json.amount, json.budgets, json.id)
+    }
+
+    asJsonObj() {
+        return {
+            name: this.name,
+            id: this.id,
+            date: this.date,
+            amount: this.amount,
+            budgets: this.budgets,
+        }
+    }
+
 }
 
 const _day = 100000000
+const _demoExpenses = [
+    new Expense("Elmer's", DateTime.now().minus(1 * _day).toUnixInteger(), 18.33, ["demo_budget_2"]),
+    new Expense("Taco Bell", DateTime.now().minus(2 * _day).toUnixInteger(), 5.99, ["demo_budget_2"]),
+    new Expense("DMV", DateTime.now().minus(9 * _day).toUnixInteger(), 100.00, []),
+    new Expense("Hulu", DateTime.now().minus(9 * _day).toUnixInteger(), 5.00, ["demo_budget_4"]),
+    new Expense("Target", DateTime.now().minus(10 * _day).toUnixInteger(), 56.49, ["demo_budget_1"]),
+    new Expense("Safeway", DateTime.now().minus(12 * _day).toUnixInteger(), 4.39, ["demo_budget_1"]),
+]
 
 // This is meant to be abstract; instantiating won't really do anything
 export class ExpenseManager {
 
     // TODO: Delete these demo values
-    static expenses = [
-        new Expense("Elmer's", DateTime.now().minus(1 * _day).toUnixInteger(), 18.33, ["demo_budget_2"]),
-        new Expense("Taco Bell", DateTime.now().minus(2 * _day).toUnixInteger(), 5.99, ["demo_budget_2"]),
-        new Expense("DMV", DateTime.now().minus(9 * _day).toUnixInteger(), 100.00, []),
-        new Expense("Hulu", DateTime.now().minus(9 * _day).toUnixInteger(), 5.00, ["demo_budget_4"]),
-        new Expense("Target", DateTime.now().minus(10 * _day).toUnixInteger(), 56.49, ["demo_budget_1"]),
-        new Expense("Safeway", DateTime.now().minus(12 * _day).toUnixInteger(), 4.39, ["demo_budget_1"]),
-    ]
+    static expenses = []
 
-    static add(...args) {
+    static save() {
+        localStorage.setItem("expenses", JSON.stringify(this.expenses.map(e => e.asJsonObj())))
+    }
 
-        // probably not the best way to do this but it helps update the view state
-        this.expenses = [...args, ...this.expenses]
+    static initFromStorage() {
+        let json = localStorage.getItem("expenses")
+        this.expenses = json ? JSON.parse(json).map(e => Expense.fromJsonObj(e)) : _demoExpenses
+    }
+
+    static add(...expenses) {
+        // definitely not the best way to do this but it helps update the view state
+        this.expenses = [...this.expenses, ...expenses]
+        // Save
+        this.save()
     }
 
     static delete(...expenseIds) {
-
-        console.log("bruh delete")
-
         this.expenses = this.expenses.filter(exp => !expenseIds.includes(exp.id))
-
-        // for (const expenseId of expenseIds) {
-        //     let index = this.expenses.findIndex((val) => val.id === expenseId);
-        //     if (index !== -1) {
-        //         // Do any events that need to happen here
-        //         // Like updating storage or something
-        //         console.log("deleting an expense")
-        //         this.expenses.splice(index, 1);
-        //     }
-        // }
+        // Save
+        this.save()
     }
-
 }
 
