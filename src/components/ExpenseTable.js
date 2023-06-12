@@ -92,10 +92,10 @@ function ExpenseTable() { // function ExpenseTable({expenses})
                 <Card variant="outlined">
                     <small>Remaining Budget</small>
                     <h2>
-                        {BudgetManager.budgets.map(budget => budget.id === filter && budget.timePeriod === "daily" ? "$" + (budget.amount - Number(spendingOver('day').replace('$',''))) : 
-                                                            budget.id === filter && budget.timePeriod === "weekly" ? "$" + (budget.amount - Number(spendingOver('week').replace('$',''))) :
-                                                            budget.id === filter && budget.timePeriod === "monthly" ? "$" + (budget.amount - Number(spendingOver('month').replace('$',''))) :
-                                                            budget.id === filter && budget.timePeriod === "annual" ? "$" + (budget.amount - Number(spendingOver('year').replace('$',''))) :" ")}
+                        {BudgetManager.budgets.map(budget => budget.id === filter && budget.timePeriod === "daily" ? "$" + (budget.amount - Number(spendingOver('day').replace('$',''))).toFixed(2) : 
+                                                            budget.id === filter && budget.timePeriod === "weekly" ? "$" + (budget.amount - Number(spendingOver('week').replace('$',''))).toFixed(2) :
+                                                            budget.id === filter && budget.timePeriod === "monthly" ? "$" + (budget.amount - Number(spendingOver('month').replace('$',''))).toFixed(2) :
+                                                            budget.id === filter && budget.timePeriod === "annual" ? "$" + (budget.amount - Number(spendingOver('year').replace('$',''))).toFixed(2) :" ")}
                     </h2>
                 </Card>
             </div>
